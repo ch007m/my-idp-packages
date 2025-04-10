@@ -16,10 +16,11 @@ idp create \
 
 ## Packages
 
-| Package name                         | Version | comment                                                        | Project                                                          |
-|--------------------------------------|---------|----------------------------------------------------------------|------------------------------------------------------------------|
-| [external-secrets](external-secrets) | 0.15.1  | Unique yaml file generated from Helm chart with bash script    | https://external-secrets.io/latest/introduction/getting-started/ |
-| [tekton](tekton)                     | v0.62.8 | Kustomize project combining external resources and local files | https://github.com/tektoncd/pipeline/                            |
+| Package name                                 | Version | comment                                                        | Project                                                          |
+|----------------------------------------------|---------|----------------------------------------------------------------|------------------------------------------------------------------|
+| [external-secrets](external-secrets)         | 0.15.1  | Unique yaml file generated from Helm chart with bash script    | https://external-secrets.io/latest/introduction/getting-started/ |
+| [tekton](tekton)                             | v0.62.8 | Kustomize project combining external resources and local files | https://github.com/tektoncd/pipeline/                            |
+| [kubernetes-dashboard](kubernetes-dashboard) | 7.11.1  | Unique yaml file generated from Helm chart with bash script    | https://github.com/kubernetes/dashboard                          |
 
 ## New package
 
@@ -27,7 +28,7 @@ To create a `new package` directory  where the resources should be populated fro
 
 ```shell
 // export them or add thelm to your .env file
-PACKAGE_NAME=kubernetes-dashboard666
+PACKAGE_NAME=kubernetes-dashboard
 PACKAGE_VERSION=7.11.1
 CHART_REPO_URL=https://kubernetes.github.io/dashboard/
 CHART_REPO_NAME=kubernetes-dashboard
