@@ -4,7 +4,14 @@ To install a package, pass the url reference using the package name and `//`
 
 Example:
 ```shell
-idp create --name idplatform -p https://github.com/ch007m/my-idp-packages//external-secrets
+set REPO_IDP_PACKAGES https://github.com/ch007m/my-idp-packages
+
+idp create \
+   --color \
+   --name idpplatform \
+   --dev-password \
+   -p $REPO_IDP_PACKAGES//external-secrets \
+   -p $REPO_IDP_PACKAGES//tekton
 ```
 
 ## Packages
