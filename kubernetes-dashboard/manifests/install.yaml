@@ -123,7 +123,7 @@ metadata:
     
   name: kubernetes-dashboard-csrf
 data:
-  private.key: "dUpVSGZ5Z1dJTHpQZ2NTZzBvUXBpVjlSdVpaRnlZaTI1eWFOUThoL1lWdEczM2JJMnBYSGpVenl4Z2ozRlhrY29mM1JGWVJ3TW13NlhFTndVOW5Ja05wOTBEMzQ5U0F5ZjRlekI4S0hqMnZBeHZvOGFTM3hwbjFNWXpsSzlFSzJhZFJlZU82d3ZxYjBIQ2FQQmFmUm9vejNscUlkTE9BT1NYTWNhc0xPSkNsYUxrOUprNm41RDhtaTVEeTU1YlY2WUJVVjc1OEltN3BIRHNyejF6aEdFc1dZaTZxeWxKcnhnQW0zNTZtRFFUUFZiYUhjSzlnK0V4MVpNb3ZZK0V3NTFiSUkwWHVzVUg1aDRZd0R4bG5rM05WUy9XbW0wbHpaUW9QeHMxaDlEOE1JeFc1Z2ZGUHZGekdnR0VMNytPMklmRCtRZ0FQZDNNaHFEM3BYemZuNy93PT0="
+  private.key: "dmE2NllWQ0V4RzJ6dklFa2J2RGphcUZ1VTh0YlBiVnFkV2dlS2x4azdZOXdiTEVkdEVNSEtzWkdWeXMwZ3VBaVdlMGhCYmJTYWNnVER3T0dyL3JMcUptZGxMQ0hEdmtDMUZJMWR5bnFNRzNVR2pJZHdFM0MwNFJ3T05VZjZUMFdCTm1lWFllMmxOUldqcktnLzEyZ3BIQ29BUVJVemlUb3FQSnk1YnFTbGpkNk81enlQblJMU0ZUejBJQW01Q1hMTWswZCt3NWJSR2FFY0hGT04rZ2JNZjdxcVVRNmVWLzczdzh6aTk1djREOU1mUFd3TGh1YldicGNGTjQwNFpDM2V6dTZWYitZNGpYYlBNenpCVHU2TGhZTGlObVNyck0zQWNtK2VaZ2JUMTVmU2xENFRlME1NZFhyYXEzTGY3MEVtL01LdWRoU1BtWlE5dDdsUS93NmZ3PT0="
 ---
 # Source: kubernetes-dashboard/templates/config/gateway.yaml
 # Copyright 2017 The Kubernetes Authors.
@@ -953,7 +953,7 @@ spec:
         app.kubernetes.io/version: 1.11.1
         app.kubernetes.io/component: api
       annotations:
-        checksum/config: 1e93d27eafafa02b89f135e93fa15cb99bea3f6b78db117bb7329a2af652e23c
+        checksum/config: 173dbb29b8e19cba734fc8a8b5ba92134b62a922f0f7ec60fb0685161cd61de8
     spec:
       containers:
         - name: kubernetes-dashboard-api
@@ -1066,7 +1066,7 @@ spec:
         app.kubernetes.io/version: 1.2.4
         app.kubernetes.io/component: auth
       annotations:
-        checksum/config: 7997e26072af56fa6e67eca514eb9338d3e2a5302f5f622dc448fd1b9a6db839
+        checksum/config: 771560967fec91575b6fd04d56c86a2147d9cd86fc081b4db6db4df9e2f2d45a
     spec:
       containers:
         - name: kubernetes-dashboard-auth
@@ -1348,6 +1348,59 @@ spec:
 
       serviceAccountName: kubernetes-dashboard-web
 ---
+# Source: kubernetes-dashboard/templates/networking/ingress.yaml
+# Copyright 2017 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+# Determine the service port to use for the ingress configuration
+# If TLS is enabled in the ingress configuration, use the TLS service port.
+# Otherwise, fall back to the HTTP service port.
+
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  labels:
+    helm.sh/chart: kubernetes-dashboard-7.11.1
+    app.kubernetes.io/instance: kubernetes-dashboard
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: kubernetes-dashboard
+  annotations:
+    
+    cert-manager.io/issuer: selfsigned
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  name: kubernetes-dashboard
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+      - kube-ui.cnoe.localtest.me
+      secretName: kubernetes-dashboard-certs
+  rules:
+    - host: kube-ui.cnoe.localtest.me
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: kubernetes-dashboard-kong-proxy
+                port:
+                  number: 443
+---
 # Source: kubernetes-dashboard/templates/extras/manifests.yaml
 # Copyright 2017 The Kubernetes Authors.
 #
@@ -1364,21 +1417,6 @@ spec:
 # limitations under the License.
 ---
 # Source: kubernetes-dashboard/templates/extras/servicemonitor.yaml
-# Copyright 2017 The Kubernetes Authors.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
----
-# Source: kubernetes-dashboard/templates/networking/ingress.yaml
 # Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
