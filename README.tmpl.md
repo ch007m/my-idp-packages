@@ -18,22 +18,39 @@ idp create \
 
 <!-- INCLUDE:sorted.md -->
 
-## How to add a new package
+## How to add a new package's project
 
-To create a `new package` directory  where the yaml resource files should be populated from a helm chart using `helm template`, execute the following script. 
+To create a `new package` directory packaging one of the following options:
 
-**Note**: Different env variables are available to customize the package project: 
+- Kustomize files, 
+- Script able to generate from helm a YAML resources file,
+- An Argo CD Application file installing a Helm chart
+
+use the following python script by defining the `package name` and by specifying the type: helm, kustomize or argocd
+
+**Note**: Different env variables are available to customize the package project:
 
 ```shell
 // export them or add thelm to your .env file
 PACKAGE_NAME=kubernetes-dashboard
+PROJECT_TYPE=helm
 PACKAGE_VERSION=7.11.1
+CHART_CODE_REPO=https://github.com/kubernetes/dashboard
 CHART_REPO_URL=https://kubernetes.github.io/dashboard/
 CHART_REPO_NAME=kubernetes-dashboard
 CHART_NAME=kubernetes-dashboard
 CHART_RELEASE_NAME=kubernetes-dashboard
 TARGET_NAMESPACE=kubernetes-dashboard
 
-./scripts/new-package-project.sh
-```
+❯ ./scripts/generate-project-package.py
+Please enter the package name (default: my-package): 
+Please enter the project type (default: helm, options: helm, kustomize, argocd): 
+Package Name: my-package
+Project Type: helm
 
+🚧 Generating a 'helm' project for the package: my-package
+
+✅ Created generate-manifests.sh
+✅ Created README.md
+✅ Created my-package.yaml
+```

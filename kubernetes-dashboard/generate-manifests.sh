@@ -2,7 +2,6 @@
 set -e
 cd $(dirname "$0")
 
-# env variable to be added to your .env file => PACKAGE_VERSION
 if [[ -n $PACKAGE_VERSION ]]; then
   CHART_VERSION=$PACKAGE_VERSION
 else

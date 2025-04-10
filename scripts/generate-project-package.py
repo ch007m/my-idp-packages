@@ -138,15 +138,14 @@ def create_argocd_files(package_name: str, base_path: Path):
 
 def main():
     # Read environment variables
-    PACKAGE_NAME = get_env_var("PACKAGE_NAME", "kubernetes-dashboard").lower()
-    PACKAGE_VERSION = get_env_var("PACKAGE_VERSION", "7.11.1").lower()
-    CHART_REPO_URL = get_env_var("CHART_REPO_URL", "https://kubernetes.github.io/dashboard/")
+    PACKAGE_NAME = get_env_var("PACKAGE_NAME", "").lower()
+    PACKAGE_VERSION = get_env_var("PACKAGE_VERSION", "").lower()
+    PROJECT_TYPE = get_env_var("PROJECT_TYPE", "helm").lower()
+    CHART_REPO_URL = get_env_var("CHART_REPO_URL","")
     CHART_REPO_NAME = get_env_var("CHART_REPO_NAME", PACKAGE_NAME)
     CHART_NAME = get_env_var("CHART_NAME", PACKAGE_NAME)
     CHART_RELEASE_NAME = get_env_var("CHART_RELEASE_NAME", PACKAGE_NAME)
     TARGET_NAMESPACE = get_env_var("TARGET_NAMESPACE", PACKAGE_NAME)
-
-    PROJECT_TYPE_DEFAULT = "helm"
 
     # Argument parsing
     parser = argparse.ArgumentParser(description="Scaffold a project package")
@@ -160,7 +159,7 @@ def main():
         package_name = args.package
 
     if not args.type:
-        project_type = input(f"Please enter the project type (default: {PROJECT_TYPE_DEFAULT}, options: helm, kustomize, argocd): ").strip().lower() or PROJECT_TYPE_DEFAULT
+        project_type = input(f"Please enter the project type (default: {PROJECT_TYPE}, options: helm, kustomize, argocd): ").strip().lower() or PROJECT_TYPE
     else:
         project_type = args.type
 

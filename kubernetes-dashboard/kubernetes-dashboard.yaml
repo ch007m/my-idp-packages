@@ -1,4 +1,4 @@
-# Git repository of the chart/project: https://github.com/kubernetes/dashboard
+# Git repository of the chart/project: $CHART_CODE_REPO
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -9,11 +9,11 @@ metadata:
 spec:
   destination:
     namespace: kubernetes-dashboard
-    server: https://kubernetes.default.svc
+    server: "https://kubernetes.default.svc"
   source:
     repoURL: cnoe://manifests
     targetRevision: HEAD
-    path: .
+    path: "."
   project: default
   syncPolicy:
     automated:
