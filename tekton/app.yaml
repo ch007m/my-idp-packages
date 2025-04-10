@@ -14,9 +14,7 @@ spec:
     targetRevision: HEAD
     path: "overlays"
     kustomize:
-      commonAnnotationsEnvsubst: true
-      commonAnnotations:
-        tekton_version: v0.62.8
+      tekton_version: v0.62.8
   project: default
   syncPolicy:
     automated:
