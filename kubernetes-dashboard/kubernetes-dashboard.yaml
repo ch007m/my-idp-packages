@@ -1,3 +1,4 @@
+# Git repository of the chart/project: https://github.com/kubernetes/dashboard
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:

@@ -54,7 +54,8 @@ chmod +x $PACKAGE_NAME/$SCRIPT_FILE
 touch $PACKAGE_NAME/values.yaml
 
 touch $PACKAGE_NAME/$ARGO_APPLICATION_YAML
-echo "apiVersion: argoproj.io/v1alpha1
+echo "# Git repository of the chart/project: $CHART_CODE_REPO
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: $PACKAGE_NAME
