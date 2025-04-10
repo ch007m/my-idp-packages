@@ -16,5 +16,7 @@ idp create \
 
 ## Packages
 
-- [external-secrets](external-secrets) - https://external-secrets.io/latest/introduction/getting-started/
-- [tekton](tekton) - https://github.com/tektoncd/pipeline/
+| Package name                         | Version | comment                                    | Project                                                          |
+|--------------------------------------|---------|--------------------------------------------|------------------------------------------------------------------|
+| [external-secrets](external-secrets) | 0.15.1  | Unique yaml file generated from Helm chart | https://external-secrets.io/latest/introduction/getting-started/ |
+| [tekton](tekton)                     | v0.62.8 | Kustomize project                          | https://github.com/tektoncd/pipeline/                            

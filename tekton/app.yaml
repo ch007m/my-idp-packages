@@ -13,8 +13,6 @@ spec:
     repoURL: cnoe://manifests
     targetRevision: HEAD
     path: "overlays"
-    kustomize:
-      tekton_version: v0.62.8
   project: default
   syncPolicy:
     automated:
