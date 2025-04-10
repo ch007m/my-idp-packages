@@ -14,5 +14,5 @@ echo "# This file is auto-generated with 'kubernetes-dashboard/generate-manifest
 
 helm repo add kubernetes-dashboard --force-update https://kubernetes.github.io/dashboard/
 helm repo update
-helm template -n kubernetes-dashboard kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard -f values.yaml --version  >> manifests/install.yaml
+helm template -n kubernetes-dashboard kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard -f values.yaml --version $CHART_VERSION >> manifests/install.yaml
 
