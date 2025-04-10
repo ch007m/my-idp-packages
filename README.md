@@ -24,7 +24,9 @@ idp create \
 
 ## New package
 
-To create a `new package` directory  where the resources should be populated from a helm chart, execute the following script. Different env variables are available to configure the project: 
+To create a `new package` directory  where the yaml resource files should be populated from a helm chart using `helm template`, execute the following script. 
+
+**Note**: Different env variables are available to customize the package project: 
 
 ```shell
 // export them or add thelm to your .env file
