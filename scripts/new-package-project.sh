@@ -46,8 +46,7 @@ echo \"# This file is auto-generated with 'kubernetes-dashboard/generate-manifes
 
 helm repo add $PACKAGE_NAME --force-update $CHART_REPO_URL
 helm repo update
-helm template -n $TARGET_NAMESPACE $CHART_RELEASE_NAME $CHART_REPO_NAME/$PACKAGE_NAME -f values.yaml --version \$CHART_VERSION >> ${INSTALL_YAML}
-" > $PACKAGE_NAME/$SCRIPT_FILE
+helm template -n $TARGET_NAMESPACE $CHART_RELEASE_NAME $CHART_REPO_NAME/$PACKAGE_NAME -f values.yaml --version \$CHART_VERSION >> ${INSTALL_YAML}" > $PACKAGE_NAME/$SCRIPT_FILE
 
 chmod +x $PACKAGE_NAME/$SCRIPT_FILE
 

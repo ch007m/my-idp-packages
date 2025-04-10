@@ -1,0 +1,6 @@
+app:
+  ingress:
+    enabled: true
+    hosts:
+      - kube-ui.cnoe.localtest.me
+    ingressClassName: nginx
