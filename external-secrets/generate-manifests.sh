@@ -12,7 +12,7 @@ fi
 INSTALL_YAML="manifests/install.yaml"
 
 echo "# EXTERNAL SECRETS INSTALL RESOURCES" >${INSTALL_YAML}
-echo "# This file is auto-generated with 'ref-impelmentation/external-secrets/generate-manifests.sh'" >>${INSTALL_YAML}
+echo "# This file is auto-generated with 'external-secrets/generate-manifests.sh'" >>${INSTALL_YAML}
 
 helm repo add external-secrets --force-update https://charts.external-secrets.io
 helm repo update
