@@ -1,5 +1,5 @@
 # EXTERNAL SECRETS INSTALL RESOURCES
-# This file is auto-generated with 'ref-impelmentation/external-secrets/generate-manifests.sh'
+# This file is auto-generated with 'ref-implementation/external-secrets/generate-manifests.sh'
 ---
 # Source: external-secrets/templates/cert-controller-serviceaccount.yaml
 apiVersion: v1
