@@ -1,6 +1,6 @@
 ## vcluster
 
-This package create several Argo CD Application (from an Applicationset) able to create a vcluster - https://www.vcluster.com/docs on a kubernetes cluster.
+This package create several Argo CD Application (from an ApplicationSet) able to create a vcluster - https://www.vcluster.com/docs on a kubernetes cluster.
 
 As each vcluster is exposed behind its Kubernetes API; it is then needed to create a Secret containing the kubeconfig that Argocd (or users) will use to access them and to register it as [Cluster](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters).
 
