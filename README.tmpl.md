@@ -54,3 +54,4 @@ Project Type: helm
 ✅ Created README.md
 ✅ Created my-package.yaml
 ```
+Enjoy ;-)
