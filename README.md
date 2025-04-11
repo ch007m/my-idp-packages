@@ -2,17 +2,18 @@
 
 This project references IDP packages that you can install top of a kind cluster created using the tool: [idpbuilder](https://github.com/cnoe-io/idpbuilder/).
 
-| Package name                                   | Version                         | comment                                                                 | Project                                      |
-|------------------------------------------------|---------------------------------|-------------------------------------------------------------------------|----------------------------------------------|
-| [cert-manager](cert-manager)                   | v1.15.0                         | Kustomize project combining external resource(s)                        | https://github.com/cert-manager/cert-manager |
-| [cert-trust-manager](cert-trust-manager)       | v1.17.1 (cert), v0.16.0 (trust) | Helm deployment through Argo CD Application                             | https://github.com/cert-manager/cert-manager |
-| [external-secrets](external-secrets)           | 0.15.1                          | Yaml file generated from Helm chart with bash script                    | https://external-secrets.io/latest/          |
-| [kratix](kratix)                               | latest                          | Kustomize project combining external resources and local files          | https://www.kratix.io/                       |
-| [kubernetes-dashboard](kubernetes-dashboard)   | 7.11.1                          | Yaml file generated from Helm chart with bash script                    | https://github.com/kubernetes/dashboard      |
-| [kyverno-policy-secret](kyverno-policy-secret) | n/a                             | Kustomize project of local resource(s)                                  |                                              |
-| [kyverno](kyverno)                             | 3.3.7                           | Helm deployment through Argo CD Application + some customized resources | https://kyverno.io/                          |
-| [tekton](tekton)                               | v0.62.8                         | Kustomize project combining external resources and local files          | https://github.com/tektoncd/pipeline/        |
-| [vcluster](vcluster)                           | 0.24.0                          | Helm deployment through Argo CD Application                             | https://www.vcluster.com/docs                |
+| Package name                                     | Version                         | comment                                                                 | Project                                                  |
+|--------------------------------------------------|---------------------------------|-------------------------------------------------------------------------|----------------------------------------------------------|
+| [cert-manager](cert-manager)                     | v1.15.0                         | Kustomize project combining external resource(s)                        | https://github.com/cert-manager/cert-manager             |
+| [cert-trust-manager](cert-trust-manager)         | v1.17.1 (cert), v0.16.0 (trust) | Helm deployment through Argo CD Application                             | https://github.com/cert-manager/cert-manager             |
+| [external-secrets](external-secrets)             | 0.15.1                          | Yaml file generated from Helm chart with bash script                    | https://external-secrets.io/latest/                      |
+| [kratix-new-destination](kratix-new-destination) | n/a                             | Helm deployment through Argo CD Application                             | https://docs.kratix.io/main/reference/destinations/intro |
+| [kratix](kratix)                                 | latest                          | Kustomize project combining external resources and local files          | https://www.kratix.io/                                   |
+| [kubernetes-dashboard](kubernetes-dashboard)     | 7.11.1                          | Yaml file generated from Helm chart with bash script                    | https://github.com/kubernetes/dashboard                  |
+| [kyverno-policy-secret](kyverno-policy-secret)   | n/a                             | Kustomize project of local resource(s)                                  |                                                          |
+| [kyverno](kyverno)                               | 3.3.7                           | Helm deployment through Argo CD Application + some customized resources | https://kyverno.io/                                      |
+| [tekton](tekton)                                 | v0.62.8                         | Kustomize project combining external resources and local files          | https://github.com/tektoncd/pipeline/                    |
+| [vcluster](vcluster)                             | 0.24.0                          | Helm deployment through Argo CD Application                             | https://www.vcluster.com/docs                            |
 
 To install a package or more, pass the git url of this project along the name of the package. 
 
