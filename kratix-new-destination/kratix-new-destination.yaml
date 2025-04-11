@@ -7,11 +7,11 @@ spec:
   generators:
     - list:
         elements:
-          - clusterName: worker1
+          - clusterName: worker-1
             repoPath: worker-1
             environment: dev
             team: team-a
-          - clusterName: worker2
+          - clusterName: worker-2
             repoPath: worker-2
             environment: test
             team: team-b

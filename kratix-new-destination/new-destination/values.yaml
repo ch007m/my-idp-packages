@@ -4,8 +4,8 @@
 # Secret         - Gitea server credentials
 
 destination:
-  name: worker-1
-  path: worker-1
+  name: #worker-1
+  path: #worker-1
 
 stateStore:
   kind: GitStateStore

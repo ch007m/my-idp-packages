@@ -1,28 +1,40 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
-  name: kratix-agent-worker-1
+  name: kratix-new-agent
   namespace: argocd
-  labels:
-    app.kubernetes.io/name: kratix-agent-worker-1
 spec:
-  project: default
-  destination:
-    name: worker-1 # name of the target cluster where the resources should be created
-    # server: "https://kubernetes.default.svc"
-  source:
-    repoURL: cnoe://kratix-worload
-    targetRevision: HEAD
-    path: .
-    helm:
-      valuesObject:
-        giteaServer:
-          url: https://gitea.cnoe.localtest.me:8443 # http://192.168.129.0:32223
-        gitKratix:
-          org: kratix
-          repository: worker-1
-  syncPolicy:
-    automated:
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+  generators:
+    - list:
+        elements:
+          - clusterName: worker-1
+            repoPath: worker-1
+          - clusterName: worker-2
+            repoPath: worker-2
+  template:
+    metadata:
+      name: "kratix-new-agent-{{clusterName}}"
+      labels:
+        app.kubernetes.io/name: "kratix-new-agent-{{clusterName}}"
+    spec:
+      project: default
+      destination:
+        name: "{{clusterName}}" # name of the target cluster where the resources should be created
+        # server: "https://kubernetes.default.svc"
+      source:
+        repoURL: cnoe://kratix-worload
+        targetRevision: HEAD
+        path: .
+        helm:
+          valuesObject:
+            giteaServer:
+              url: https://gitea.cnoe.localtest.me:8443 # http://192.168.129.0:32223 (IP:NODE_PORT)
+            gitKratix:
+              org: kratix
+              repository: state
+              path: "{{repoPath}}"
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

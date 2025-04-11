@@ -3,7 +3,7 @@
 # Application CR - kratix resources
 # Secret         - Gitea server credentials
 
-clusterName: worker1
+clusterName: # worker-1
 giteaServer:
   url: # http://<HOST_IP_ADDRESS>:<NODE_PORT> or <INGRESS_URL>:<IDP_PORT> like : gitea.cnoe.localtest.me:8443
   username: "giteaAdmin"

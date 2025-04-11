@@ -7,11 +7,13 @@ This package performs the following steps when it is needed to create a new Krat
 
 It is possible to customize the `Destination` to be generated and registered using the following parameters within the [kratix-new-destination.yaml](kratix-new-destination.yaml) file
 ```yaml
-- clusterName: worker1 # name of the target kubernetes cluster and Destination
+- clusterName: worker-1 # name of the target kubernetes cluster and Destination
   repoPath: worker-1   # Path to access the resources files within the GitStateStore
   environment: test    # Environment's label
   team: team-a         # Team's label
 ```
+
+**Note**: Several destinations can be created as this package uses an Argo cd `ApplicationSet` file !!
 
 The information to access the Gitea Kratix StateStore are defined with the following Helm values which can also be overridden under the field `valuesObject` of the ApplicationSet resource file:
 ```yaml

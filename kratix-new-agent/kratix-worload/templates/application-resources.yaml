@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: "{{ $.Values.giteaServer.url }}/{{ $.Values.gitKratix.org }}/{{ $.Values.gitKratix.repository }}"
     targetRevision: HEAD
-    path: ./{{ $.Values.clusterName }}/resources
+    path: ./{{ $.Values.gitKratix.path }}/resources
     directory:
       recurse: true
   destination:
