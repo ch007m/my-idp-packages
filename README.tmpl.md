@@ -1,6 +1,12 @@
-## IDP Packages
+# Collection of IDP Packages
 
-To install a package, pass the url reference using the package name and `//`
+This project references IDP packages that you can install top of a kind cluster created using the tool: [idpbuilder](https://github.com/cnoe-io/idpbuilder/).
+
+<!-- INCLUDE:sorted.md -->
+
+To install a package or more, pass the git url of this project along the name of the package. 
+
+**Note**: As mentioned [within the kustomize documentation](https://github.com/kubernetes-sigs/kustomize/blob/master/examples/remoteBuild.md#remote-directories), The directory or package name is specified by appending a `//` after the repo URL
 
 Example:
 ```shell
@@ -14,13 +20,9 @@ idp create \
    -p $REPO_IDP_PACKAGES//tekton
 ```
 
-## Packages
+## How to add a new IDP package's project
 
-<!-- INCLUDE:sorted.md -->
-
-## How to add a new package's project
-
-To create a `new package` directory packaging one of the following options:
+To create a `new IDP package` directory packaging one of the following options:
 
 - Kustomize files, 
 - Script able to generate from helm a YAML resources file,

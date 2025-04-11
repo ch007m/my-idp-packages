@@ -1,20 +1,6 @@
-## IDP Packages
+# Collection of IDP Packages
 
-To install a package, pass the url reference using the package name and `//`
-
-Example:
-```shell
-set REPO_IDP_PACKAGES https://github.com/ch007m/my-idp-packages
-
-idp create \
-   --color \
-   --name idplatform \
-   --dev-password \
-   -p $REPO_IDP_PACKAGES//external-secrets \
-   -p $REPO_IDP_PACKAGES//tekton
-```
-
-## Packages
+This project references IDP packages that you can install top of a kind cluster created using the tool: [idpbuilder](https://github.com/cnoe-io/idpbuilder/).
 
 | Package name                                   | Version                         | comment                                                                 | Project                                      |
 |------------------------------------------------|---------------------------------|-------------------------------------------------------------------------|----------------------------------------------|
@@ -28,9 +14,25 @@ idp create \
 | [tekton](tekton)                               | v0.62.8                         | Kustomize project combining external resources and local files          | https://github.com/tektoncd/pipeline/        |
 | [vcluster](vcluster)                           | 0.24.0                          | Helm deployment through Argo CD Application                             | https://www.vcluster.com/docs                |
 
-## How to add a new package's project
+To install a package or more, pass the git url of this project along the name of the package. 
 
-To create a `new package` directory packaging one of the following options:
+**Note**: As mentioned [within the kustomize documentation](https://github.com/kubernetes-sigs/kustomize/blob/master/examples/remoteBuild.md#remote-directories), The directory or package name is specified by appending a `//` after the repo URL
+
+Example:
+```shell
+set REPO_IDP_PACKAGES https://github.com/ch007m/my-idp-packages
+
+idp create \
+   --color \
+   --name idplatform \
+   --dev-password \
+   -p $REPO_IDP_PACKAGES//external-secrets \
+   -p $REPO_IDP_PACKAGES//tekton
+```
+
+## How to add a new IDP package's project
+
+To create a `new IDP package` directory packaging one of the following options:
 
 - Kustomize files, 
 - Script able to generate from helm a YAML resources file,
