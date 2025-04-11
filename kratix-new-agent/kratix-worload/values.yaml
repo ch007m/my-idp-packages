@@ -10,5 +10,6 @@ giteaServer:
   password: "developer"
 
 gitKratix:
-  org: kratix
-  repository: state
+  org: # kratix
+  repository: # state
+  path: # worker-1

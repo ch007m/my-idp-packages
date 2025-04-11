@@ -1,14 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kratix-agent
+  name: kratix-agent-worker-1
   namespace: argocd
   labels:
-    app.kubernetes.io/name: kratix-agent
+    app.kubernetes.io/name: kratix-agent-worker-1
 spec:
   project: default
   destination:
-    server: "https://kubernetes.default.svc"
+    name: worker-1 # name of the target cluster where the resources should be created
+    # server: "https://kubernetes.default.svc"
   source:
     repoURL: cnoe://kratix-worload
     targetRevision: HEAD
@@ -19,7 +20,7 @@ spec:
           url: https://gitea.cnoe.localtest.me:8443 # http://192.168.129.0:32223
         gitKratix:
           org: kratix
-          repository: state
+          repository: worker-1
   syncPolicy:
     automated:
       selfHeal: true

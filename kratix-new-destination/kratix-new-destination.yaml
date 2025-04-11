@@ -9,8 +9,12 @@ spec:
         elements:
           - clusterName: worker1
             repoPath: worker-1
-            environment: test
+            environment: dev
             team: team-a
+          - clusterName: worker2
+            repoPath: worker-2
+            environment: test
+            team: team-b
   template:
     metadata:
       name: "kratix-new-destination-{{clusterName}}"
@@ -23,9 +27,9 @@ spec:
       destination:
         server: "https://kubernetes.default.svc"
       source:
-        repoURL: cnoe://
+        repoURL: cnoe://new-destination
         targetRevision: HEAD
-        path: destination
+        path: .
         helm:
           valuesObject:
             destination:

@@ -11,12 +11,12 @@ spec:
   source:
     repoURL: "{{ $.Values.giteaServer.url }}/{{ $.Values.gitKratix.org }}/{{ $.Values.gitKratix.repository }}"
     targetRevision: HEAD
-    path: ./{{ $.Values.clusterName }}/dependencies
+    path: ./{{ $.Values.gitKratix.path }}/dependencies
     directory:
       recurse: true
   destination:
-      server: https://kubernetes.default.svc # in-cluster reconcile
-      namespace: default # The namespace will only be set for namespace-scoped resources without a value for .metadata.namespace
+    server: https://kubernetes.default.svc # in-cluster reconcile
+    namespace: default # The namespace will only be set for namespace-scoped resources without a value for .metadata.namespace
   syncPolicy:
     automated:
       selfHeal: true
