@@ -15,6 +15,7 @@ This project references IDP packages that you can install top of a kind cluster 
 | [kyverno](kyverno)                               | 3.3.7                           | Helm deployment through Argo CD Application + some customized resources | https://kyverno.io/                                      |
 | [tekton](tekton)                                 | v0.62.8                         | Kustomize project combining external resources and local files          | https://github.com/tektoncd/pipeline/                    |
 | [vcluster](vcluster)                             | 0.24.0                          | Helm deployment through Argo CD Application                             | https://www.vcluster.com/docs                            |
+|[kratix-gitstore-job](kratix-gitstore-job)| n/a                             | Kubernetes resources deployed using Argocd                              ||
 
 To install a package or more, pass the git url of this project along the name of the package. 
 
