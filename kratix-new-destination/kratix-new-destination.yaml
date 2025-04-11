@@ -11,10 +11,6 @@ spec:
             repoPath: worker-1
             environment: test
             team: team-a
-          - clusterName: worker2
-            repoPath: worker-2
-            environment: prod
-            team: team-b
   template:
     metadata:
       name: "kratix-new-destination-{{clusterName}}"

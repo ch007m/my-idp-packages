@@ -1,0 +1,14 @@
+# Values to configure the resources:
+# Application CR - kratix dependencies
+# Application CR - kratix resources
+# Secret         - Gitea server credentials
+
+clusterName: worker1
+giteaServer:
+  url: # http://<HOST_IP_ADDRESS>:<NODE_PORT> or <INGRESS_URL>:<IDP_PORT> like : gitea.cnoe.localtest.me:8443
+  username: "giteaAdmin"
+  password: "developer"
+
+gitKratix:
+  org: kratix
+  repository: state
