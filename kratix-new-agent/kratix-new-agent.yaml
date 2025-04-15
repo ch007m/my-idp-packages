@@ -27,6 +27,7 @@ spec:
         path: .
         helm:
           valuesObject:
+            clusterName: "{{clusterName}}"
             giteaServer:
               url: https://gitea.cnoe.localtest.me:8443 # http://192.168.129.0:32223 (IP:NODE_PORT)
             gitKratix:
