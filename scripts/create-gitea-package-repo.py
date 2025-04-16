@@ -112,32 +112,82 @@ def patch_argocd_yaml(file_path, gitea_url, package_name):
         with open(package_name + "/"+ patched_filename, "w") as f:
           yaml.safe_dump(data, f)
         print("✅ ArgoCD YAML patched.")
+        return patched_filename
     else:
         print("ℹ️ No 'cnoe://' repoURL found, nothing to patch.")
 
+def uninstall_package(gitea_url, token, repo_name, package_name):
+    api_url = f"{gitea_url.rstrip('/')}/api/v1"
+    headers = {
+        "Authorization": f"token {token}",
+        "Content-Type": "application/json"
+    }
+
+    # Delete the ArgoCD resource
+    patched_filename = f"{package_name}-patched.yaml"
+    subprocess.run(["kubectl", "delete", "-f", package_name + "/" + patched_filename])
+
+    # Delete the Gitea repo
+    delete_response = requests.delete(
+        f"{api_url}/repos/giteaAdmin/{repo_name}",
+        headers=headers,
+        verify=False
+    )
+
+    if delete_response.status_code == 204:
+        print(f"✅ Repository '{repo_name}' deleted from Gitea.")
+    else:
+        print(f"❌ Failed to delete repo: {delete_response.status_code} {delete_response.text}")
+
+    # Delete the patched ArgoCD YAML file
+    os.remove(f"{package_name}/{patched_filename}")
+    print(f"✅ Patched ArgoCD YAML file '{patched_filename}' deleted.")
+
 def main():
-    print("🔧 Welcome to the Gitea Repo + ArgoCD Patch CLI")
+    print("🔧 Welcome to the IDP client managing the packages")
 
-    gitea_url = prompt("Enter Gitea URL", "https://gitea.cnoe.localtest.me:8443")
-    token = prompt("Enter Gitea token", get_default_token())
-    idp_name = prompt("Enter the idp name", "idplatform")
-    package_name = prompt("Enter package name")
-    package_path = prompt("Enter package_path", "manifests")
-    yaml_path = prompt("Enter ArgoCD YAML file path")
-
-    if not package_name or not yaml_path:
-        print("❌ repo_name and yaml_path are required.")
+    action = input("Choose action (i or install / u or uninstall): ").strip().lower()
+    if not action:
+        print("❌ action to be executed is required.")
         return
 
-    if not os.path.isfile(yaml_path):
-        print("❌ File not found:", yaml_path)
-        return
+    if action in ['i', 'install']:
+        gitea_url = prompt("Enter Gitea URL", "https://gitea.cnoe.localtest.me:8443")
+        token = prompt("Enter Gitea token", get_default_token())
+        idp_name = prompt("Enter the idp name", "idplatform")
+        package_name = prompt("Enter package name")
+        package_path = prompt("Enter package_path", "manifests")
+        yaml_path = prompt("Enter ArgoCD YAML file path")
 
-    repo_name = "idpbuilder" + "-" + idp_name + "-" + package_name + "-" + package_path
+        if not package_name or not yaml_path:
+            print("❌ repo_name and yaml_path are required.")
+            return
 
-    clone_url = create_gitea_repo(gitea_url, token, idp_name, repo_name, package_name, package_path)
-    if clone_url:
-        patch_argocd_yaml(yaml_path, clone_url, package_name)
+        if not os.path.isfile(yaml_path):
+            print("❌ File not found:", yaml_path)
+            return
+
+        repo_name = "idpbuilder" + "-" + idp_name + "-" + package_name + "-" + package_path
+        repo_url = create_gitea_repo(gitea_url, token, idp_name, repo_name, package_name, package_path)
+
+        if repo_url:
+            patched_filename = patch_argocd_yaml(yaml_path, repo_url, package_name)
+            print(f"✅ Patched Argocd YAML file saved as: {patched_filename}")
+            print(f"Run the following command to install the package: {package_name}")
+            print(f"kubectl apply -f {package_name}/{patched_filename}")
+
+    elif action in ['u', 'uninstall']:
+        gitea_url = input("Enter Gitea server URL [default: https://gitea.cnoe.localtest.me:8443]: ").strip() or "https://gitea.cnoe.localtest.me:8443"
+        token = prompt("Enter Gitea token", get_default_token())
+        idp_name = prompt("Enter the idp name", "idplatform")
+        package_name = prompt("Enter package name")
+        package_path = prompt("Enter package_path", "manifests")
+        repo_name = f"idpbuilder-{idp_name}-{package_name}-{package_path}"  # Match repo naming
+
+        uninstall_package(gitea_url, token, repo_name, package_name)
+
+    else:
+        print("❌ Invalid action. Please choose either 'install' or 'uninstall'.")
 
 if __name__ == "__main__":
     main()
