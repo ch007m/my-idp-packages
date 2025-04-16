@@ -1,5 +1,25 @@
 #!/usr/bin/env python3
 
+"""\
+This script allows to install or uninstall a package on a cluster
+
+Usage: create-gitea-package-repo.py
+🔧 Welcome to the IDP client managing the packages
+
+Choose action (i or install / u or uninstall):
+
+The "install" action will :
+- Create (or delete if it exists) a Gitea repository for the Package
+- Patch the argocd application to change the repoUrl and path
+- Print the command needed to upload the content to the git repository
+- Kubectl apply the patched file
+
+The "uninstall" action will:
+- Remove the Package Gitea repository
+- Kubectl delete the patched file
+- Remove the Argocd patched file
+"""
+
 import os
 import subprocess
 import requests
@@ -7,6 +27,31 @@ import yaml
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+def execute_kubectl_command(command: str, resource_file: str):
+    """
+    Executes the given kubectl command (apply or delete) on the provided resource file.
+
+    Args:
+        command (str): The kubectl command to execute ('apply' or 'delete').
+        resource_file (str): Path to the resource file.
+
+    Raises:
+        ValueError: If the command is not 'apply' or 'delete'.
+    """
+
+    # Ensure the command is either 'apply' or 'delete'
+    if command not in ['apply', 'delete']:
+        raise ValueError("Invalid command. Only 'apply' or 'delete' are allowed.")
+
+    kubectl_command = f"kubectl {command} -f {resource_file}"
+
+    try:
+        print(f"Executing: {kubectl_command}")
+        subprocess.run(kubectl_command, shell=True, check=True)
+        print(f"✅ Successfully executed 'kubectl {command}' on {resource_file}")
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Error executing command: {e}")
 
 def prompt(text, default=None):
     prompt_text = f"{text} [{default}]: " if default else f"{text}: "
@@ -125,7 +170,7 @@ def uninstall_package(gitea_url, token, repo_name, package_name):
 
     # Delete the ArgoCD resource
     patched_filename = f"{package_name}-patched.yaml"
-    subprocess.run(["kubectl", "delete", "-f", package_name + "/" + patched_filename])
+    execute_kubectl_command("delete",package_name + "/" + patched_filename)
 
     # Delete the Gitea repo
     delete_response = requests.delete(
@@ -142,9 +187,6 @@ def uninstall_package(gitea_url, token, repo_name, package_name):
     # Delete the patched ArgoCD YAML file
     os.remove(f"{package_name}/{patched_filename}")
     print(f"✅ Patched ArgoCD YAML file '{patched_filename}' deleted.")
-
-    print(f"Run the following command to uninstall the argocd application: {package_name}")
-    print(f"kubectl delete -f {package_name}/{patched_filename}")
 
 def main():
     print("🔧 Welcome to the IDP client managing the packages")
@@ -176,8 +218,8 @@ def main():
         if repo_url:
             patched_filename = patch_argocd_yaml(yaml_path, repo_url, package_name)
             print(f"✅ Patched Argocd YAML file saved as: {patched_filename}")
-            print(f"Run the following command to install the package: {package_name}")
-            print(f"kubectl apply -f {package_name}/{patched_filename}")
+            print(f"Installing now the Argocd Application for the package: {package_name}")
+            execute_kubectl_command("apply", f"{package_name}/{patched_filename}")
 
     elif action in ['u', 'uninstall']:
         gitea_url = input("Enter Gitea server URL [default: https://gitea.cnoe.localtest.me:8443]: ").strip() or "https://gitea.cnoe.localtest.me:8443"
