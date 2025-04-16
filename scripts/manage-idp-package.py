@@ -24,10 +24,24 @@ The "uninstall" action will:
 import os
 import subprocess
 import requests
+import sys
 import yaml
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+def show_usage():
+    """Displays the usage instructions for the script."""
+    print("""
+Usage:
+    ./scripts/manage-idp-package.py [action]
+
+Actions:
+    -h, --help          Show this help message and exit.
+    i, install          Install a package on an IDP cluster.
+    u, uninstall        Uninstall a package on an IDP cluster.
+""")
+
 
 def execute_kubectl_command(command: str, resource_file: str):
     """
@@ -190,12 +204,18 @@ def uninstall_package(gitea_url, token, repo_name, package_name):
     print(f"✅ Patched ArgoCD YAML file '{patched_filename}' deleted.")
 
 def main():
-    print("🔧 Welcome to the IDP client managing the packages")
+    print("🔧 Welcome to the IDP client managing packages")
 
-    action = input("Choose action (i or install / u or uninstall): ").strip().lower()
-    if not action:
-        print("❌ action to be executed is required.")
+    # Check for help argument (-h or --help)
+    if len(sys.argv) == 1:
+        show_usage()
         return
+
+    if len(sys.argv) == 2 and sys.argv[1] not in ['i', 'install', 'u', 'uninstall' ]:
+        print("❌ Missing action. Run with -h or --help for usage.")
+        return
+
+    action = sys.argv[1].strip().lower()
 
     if action in ['i', 'install']:
         gitea_url = prompt("Enter Gitea URL", "https://gitea.cnoe.localtest.me:8443")
