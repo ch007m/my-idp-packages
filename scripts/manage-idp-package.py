@@ -3,10 +3,11 @@
 """\
 This script allows to install or uninstall a package on a cluster
 
-Usage: create-gitea-package-repo.py
-🔧 Welcome to the IDP client managing the packages
+Usage: manage-idp-package.py
 
+🔧 Welcome to the IDP client managing the packages
 Choose action (i or install / u or uninstall):
+...
 
 The "install" action will :
 - Create (or delete if it exists) a Gitea repository for the Package
