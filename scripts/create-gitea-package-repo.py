@@ -143,7 +143,7 @@ def uninstall_package(gitea_url, token, repo_name, package_name):
     os.remove(f"{package_name}/{patched_filename}")
     print(f"✅ Patched ArgoCD YAML file '{patched_filename}' deleted.")
 
-    print(f"Run the following command to uninstall the argocd aplication: {package_name}")
+    print(f"Run the following command to uninstall the argocd application: {package_name}")
     print(f"kubectl delete -f {package_name}/{patched_filename}")
 
 def main():
