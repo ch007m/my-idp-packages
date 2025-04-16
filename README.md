@@ -10,12 +10,13 @@ This project references IDP packages that you can install top of a kind cluster 
 | [kratix-new-agent](kratix-new-agent)             | n/a                             | Helm deployment through Argo CD Application                             | https://docs.kratix.io/category/installing-gitops-agent  |
 | [kratix-new-destination](kratix-new-destination) | n/a                             | Helm deployment through Argo CD Application                             | https://docs.kratix.io/main/reference/destinations/intro |
 | [kratix](kratix)                                 | latest                          | Kustomize project combining external resources and local files          | https://www.kratix.io/                                   |
+| [kro](kro)                                | 0.2.2                           | Yaml file generated from Helm chart with bash script          | https://www.kro.run/                                     |
 | [kubernetes-dashboard](kubernetes-dashboard)     | 7.11.1                          | Yaml file generated from Helm chart with bash script                    | https://github.com/kubernetes/dashboard                  |
 | [kyverno-policy-secret](kyverno-policy-secret)   | n/a                             | Kustomize project of local resource(s)                                  |                                                          |
 | [kyverno](kyverno)                               | 3.3.7                           | Helm deployment through Argo CD Application + some customized resources | https://kyverno.io/                                      |
 | [tekton](tekton)                                 | v0.62.8                         | Kustomize project combining external resources and local files          | https://github.com/tektoncd/pipeline/                    |
 | [vcluster](vcluster)                             | 0.24.0                          | Helm deployment through Argo CD Application                             | https://www.vcluster.com/docs                            |
-|[kratix-gitstore-job](kratix-gitstore-job)| n/a                             | Kubernetes resources deployed using Argocd                              ||
+|[kratix-gitstore-job](kratix-gitstore-job)| n/a                             | Kubernetes resources deployed using Argocd                              |                                                          |
 
 To install a package or more, pass the git url of this project along the name of the package. 
 

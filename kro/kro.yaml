@@ -1,0 +1,22 @@
+# Git repository of the chart/project: $CHART_CODE_REPO
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kro
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: kro
+    server: "https://kubernetes.default.svc"
+  source:
+    repoURL: cnoe://manifests
+    targetRevision: HEAD
+    path: "."
+  project: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
