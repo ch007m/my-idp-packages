@@ -30,6 +30,33 @@ import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+prompts = {
+    "gitea_url": {
+        "message": "Gitea URL",
+        "default": "https://gitea.cnoe.localtest.me:8443"
+    },
+    "token": {
+        "message": "Gitea API Token",
+        "default": "<Got from idpbuilder get secrets command>"
+    },
+    "idp_name": {
+        "message": "Idpbuilder name",
+        "default": "localdev"
+    },
+    "package_name": {
+        "message": "Package name",
+        "default": None
+    },
+    "package_path": {
+        "message": "Package path",
+        "default": "manifests"
+    },
+    "yaml_path": {
+        "message": "Path to the Argo CD Application file to be patched",
+        "default": None
+    }
+}
+
 def show_usage():
     """Displays the usage instructions for the script."""
     print("""
@@ -39,8 +66,12 @@ Usage:
 Actions:
     -h, --help          Show this help message and exit.
     i, install          Install a package on an IDP cluster.
-    u, uninstall        Uninstall a package on an IDP cluster.
+    u, uninstall        Uninstall a package on an IDP cluster.  
 """)
+    print("Options:")
+    for key, config in prompts.items():
+        default = f"(default: {config['default']})" if config['default'] else "(required)"
+        print(f"  {key.replace('_', '-'):15} {config['message']} {default}")
 
 
 def execute_kubectl_command(command: str, resource_file: str):
@@ -206,8 +237,11 @@ def uninstall_package(gitea_url, token, repo_name, package_name):
 def main():
     print("🔧 Welcome to the IDP client managing packages")
 
-    # Check for help argument (-h or --help)
-    if len(sys.argv) == 1:
+    if len(sys.argv) < 2:
+        show_usage()
+        return
+
+    if len(sys.argv) == 2 and sys.argv[1] in ['-h', '--help' ]:
         show_usage()
         return
 
