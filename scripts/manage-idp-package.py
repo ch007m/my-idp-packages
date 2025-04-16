@@ -47,10 +47,6 @@ prompts = {
         "message": "Package name",
         "default": None
     },
-    "package_path": {
-        "message": "Package path",
-        "default": "manifests"
-    },
     "yaml_path": {
         "message": "Path to the Argo CD Application file to be patched",
         "default": None
@@ -120,7 +116,7 @@ def get_default_token():
         print(f"⚠️ Failed to fetch default token: {e}")
         return ""
 
-def create_gitea_repo(gitea_url, token, idp_name, repo_name, package_name, package_path):
+def create_gitea_repo(gitea_url, token, idp_name, repo_name, package_name):
     api_url = f"{gitea_url.rstrip('/')}/api/v1"
     headers = {
         "Authorization": f"token {token}",
@@ -165,7 +161,7 @@ def create_gitea_repo(gitea_url, token, idp_name, repo_name, package_name, packa
 
     if response.status_code == 201:
         print("✅ Repository created.")
-        remote_url = f"{gitea_url.rstrip('/')}/giteaAdmin/idpbuilder-{idp_name}-{package_name}-{package_path}.git"
+        remote_url = f"{gitea_url.rstrip('/')}/giteaAdmin/idpbuilder-{idp_name}-{package_name}.git"
         print("\n📦 To push your local files, run the following commands:\n")
         print("    git init")
         print("    git checkout -b main")
@@ -256,7 +252,6 @@ def main():
         token = prompt("Enter Gitea token", get_default_token())
         idp_name = prompt("Enter the idp name", "idplatform")
         package_name = prompt("Enter package name")
-        package_path = prompt("Enter package_path", "manifests")
         yaml_path = prompt("Enter ArgoCD YAML file path")
 
         if not package_name or not yaml_path:
@@ -267,8 +262,8 @@ def main():
             print("❌ File not found:", yaml_path)
             return
 
-        repo_name = "idpbuilder" + "-" + idp_name + "-" + package_name + "-" + package_path
-        repo_url = create_gitea_repo(gitea_url, token, idp_name, repo_name, package_name, package_path)
+        repo_name = f"idpbuilder-{idp_name}-{package_name}"
+        repo_url = create_gitea_repo(gitea_url, token, idp_name, repo_name, package_name)
 
         if repo_url:
             patched_filename = patch_argocd_yaml(yaml_path, repo_url, package_name)
@@ -281,8 +276,7 @@ def main():
         token = prompt("Enter Gitea token", get_default_token())
         idp_name = prompt("Enter the idp name", "idplatform")
         package_name = prompt("Enter package name")
-        package_path = prompt("Enter package_path", "manifests")
-        repo_name = f"idpbuilder-{idp_name}-{package_name}-{package_path}"  # Match repo naming
+        repo_name = f"idpbuilder-{idp_name}-{package_name}"
 
         uninstall_package(gitea_url, token, repo_name, package_name)
 
