@@ -8,10 +8,10 @@ metadata:
   name: kro
   namespace: kro
   labels:
-    helm.sh/chart: kro-0.2.2
+    helm.sh/chart: kro-0.2.3
     app.kubernetes.io/name: kro
     app.kubernetes.io/instance: kro
-    app.kubernetes.io/version: "0.2.2"
+    app.kubernetes.io/version: "0.2.3"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
     app.kubernetes.io/part-of: kro
@@ -32,10 +32,10 @@ metadata:
       which will be automatically aggregated into this one.
   name: kro-cluster-role
   labels:
-    helm.sh/chart: kro-0.2.2
+    helm.sh/chart: kro-0.2.3
     app.kubernetes.io/name: kro
     app.kubernetes.io/instance: kro
-    app.kubernetes.io/version: "0.2.2"
+    app.kubernetes.io/version: "0.2.3"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
     app.kubernetes.io/part-of: kro
@@ -53,10 +53,10 @@ kind: ClusterRoleBinding
 metadata:
   name: kro-cluster-role-binding
   labels:
-    helm.sh/chart: kro-0.2.2
+    helm.sh/chart: kro-0.2.3
     app.kubernetes.io/name: kro
     app.kubernetes.io/instance: kro
-    app.kubernetes.io/version: "0.2.2"
+    app.kubernetes.io/version: "0.2.3"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
     app.kubernetes.io/part-of: kro
@@ -76,10 +76,10 @@ metadata:
   name: kro
   namespace: kro
   labels:
-    helm.sh/chart: kro-0.2.2
+    helm.sh/chart: kro-0.2.3
     app.kubernetes.io/name: kro
     app.kubernetes.io/instance: kro
-    app.kubernetes.io/version: "0.2.2"
+    app.kubernetes.io/version: "0.2.3"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
     app.kubernetes.io/part-of: kro
@@ -92,10 +92,10 @@ spec:
   template:
     metadata:
       labels:
-        helm.sh/chart: kro-0.2.2
+        helm.sh/chart: kro-0.2.3
         app.kubernetes.io/name: kro
         app.kubernetes.io/instance: kro
-        app.kubernetes.io/version: "0.2.2"
+        app.kubernetes.io/version: "0.2.3"
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/component: controller
         app.kubernetes.io/part-of: kro
@@ -114,7 +114,7 @@ spec:
             privileged: false
             runAsNonRoot: true
             runAsUser: 1000
-          image: "ghcr.io/kro-run/kro/controller:0.2.2"
+          image: "ghcr.io/kro-run/kro/controller:0.2.3"
           imagePullPolicy: IfNotPresent
           ports:
             - name: metricsport
@@ -140,7 +140,7 @@ spec:
             - name: KRO_LOG_LEVEL
               value: "3"
             - name: KRO_DYNAMIC_CONTROLLER_DEFAULT_RESYNC_PERIOD
-              value: "10"
+              value: "36000"
             - name: KRO_DYNAMIC_CONTROLLER_DEFAULT_QUEUE_MAX_RETRIES
               value: "20"
             - name: KRO_DYNAMIC_CONTROLLER_DEFAULT_SHUTDOWN_TIMEOUT

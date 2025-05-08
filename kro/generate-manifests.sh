@@ -5,7 +5,7 @@ cd $(dirname "$0")
 if [[ -n $PACKAGE_VERSION ]]; then
   CHART_VERSION=$PACKAGE_VERSION
 else
-  CHART_VERSION=0.2.2
+  CHART_VERSION=0.2.3
 fi
 
 echo "# KRO INSTALL RESOURCES" > manifests/install.yaml
