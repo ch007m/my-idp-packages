@@ -1,3 +1,3 @@
 # kro
 
-This package installs on the IDPlatform the following project: https://kro.run/
+This package installs on the IDPlatform the Kube Resource Orchestrator [Kro](https://kro.run/) project.
